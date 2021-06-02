@@ -1,5 +1,6 @@
-package nl.hu.bep.demo.domeinlaag;
+package nl.hu.bep.demo;
 
+import nl.hu.bep.demo.ShopList.model.Item;
 import org.junit.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

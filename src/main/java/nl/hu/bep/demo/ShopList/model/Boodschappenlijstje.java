@@ -1,7 +1,6 @@
-package nl.hu.bep.demo.domeinlaag;
+package nl.hu.bep.demo.ShopList.model;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class Boodschappenlijstje {
 

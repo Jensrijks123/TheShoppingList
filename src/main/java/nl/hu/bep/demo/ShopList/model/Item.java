@@ -1,4 +1,4 @@
-package nl.hu.bep.demo.domeinlaag;
+package nl.hu.bep.demo.ShopList.model;
 
 public class Item {
 
