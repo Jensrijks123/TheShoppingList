@@ -11,7 +11,8 @@ public class User implements Principal {
 
     static {
         allUsers = new ArrayList<>();
-        allUsers.add(new User("djensman", "jens.rijks@student.hu.nl", "djensman", "admin"));
+        allUsers.add(new User("djensman", "jens.rijks@student.hu.nl", "djensman", "user"));
+        allUsers.add(new User("admin", "admin@admin.com", "admin", "admin"));
     }
 
     private String username;
@@ -26,10 +27,16 @@ public class User implements Principal {
         this.role = role;
     }
 
-    public static String validateLogin(String username, String password) {
+    public boolean addUser(User toAdd){
+        if(!this.allUsers.contains(toAdd))  {
+            return this.allUsers.add(toAdd);
+        }
+        return false;
+    }
+
+    public static String validateLogin(String userN, String passW) {
         for (User user : allUsers) {
-            if (user.username.equals(username) && user.password.equals(password)) {
-                System.out.println(user.username.equals(username));
+            if (user.username.equals(userN) && user.password.equals(passW)) {
                 return user.role;
             }
         }
@@ -39,7 +46,6 @@ public class User implements Principal {
     public static User getUserByUserName(String username) {
         for (User user : allUsers) {
             if (user.username.equals(username)) {
-                System.out.println(user.username.equals(username));
                 return user;
             }
         }
@@ -54,32 +60,17 @@ public class User implements Principal {
         return role;
     }
 
-    public void emailChecker() {
-        if (email.contains("@") & email.contains(".")){
-            System.out.println("Goede Email!");
-        } else {
-            System.out.println("Dit is geen geldige email!");
-        }
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return username.equals(user.username);
     }
 
-    public void usernameChecker() {
-        if (!username.contains("[a-zA-Z]")){
-            System.out.println("Correcte username!");
-        } else {
-            System.out.println("Foute username!");
-        }
+    @Override
+    public int hashCode() {
+        return Objects.hash(username);
     }
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//        if (o == null || getClass() != o.getClass()) return false;
-//        User user = (User) o;
-//        return username.equals(user.username);
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        return Objects.hash(username);
-//    }
 
     public void setUsername(String username) {
         this.username = username;

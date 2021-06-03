@@ -1,6 +1,5 @@
 package nl.hu.bep.demo.ShopList.security;
 
-import nl.hu.bep.demo.ShopList.model.MyUser;
 import nl.hu.bep.demo.ShopList.model.User;
 
 import javax.ws.rs.core.SecurityContext;
@@ -23,7 +22,6 @@ public class MySecurityContext implements SecurityContext {
     @Override
     public boolean isUserInRole(String s) {
         if (user.getRole() != null) {
-            System.out.printf("%s equals %s", s, user.getRole());
             return s.equals(user.getRole());
         }
         return false;

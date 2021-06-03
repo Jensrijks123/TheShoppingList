@@ -29,27 +29,23 @@ public class AuthenticationResource {
             if (role == null) throw new IllegalArgumentException("No user found or invalid credentials");
             String token = createToken(username, role);
 
-            SimpleEntry<String, String> JWTText = new SimpleEntry<>("JWT", token);
+            SimpleEntry<String, String> JWT = new SimpleEntry<>("JWT", token);
 
-            System.out.println("wel geautoriseerd"); //asdasdadsadsadasdasd
-
-            return Response.ok(JWTText).build();
+            return Response.ok(JWT).build();
         } catch (JwtException | IllegalArgumentException e) {
 
-            System.out.println("Niet geautorizeerd"); //asdasdadsadsadasdasd
             return Response.status(Response.Status.UNAUTHORIZED).build();
-
         }
     }
 
-    private String createToken(String username, String role) {
+    private String createToken(String username, String role) throws JwtException {
         Calendar expiration = Calendar.getInstance();
         expiration.add(Calendar.MINUTE, 30);
 
         return Jwts.builder()
                 .setSubject(username)
                 .setExpiration(expiration.getTime())
-                .claim("role", role)
+                .claim(username, role)
                 .signWith(SignatureAlgorithm.HS512, key)
                 .compact();
     }

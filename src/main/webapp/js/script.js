@@ -100,14 +100,30 @@ document.addEventListener("DOMContentLoaded", () => {
        fetch("/restservices/authentication", {method: "POST", body: encData})
            .then(function (response) {
                if (response.ok) {
-                   let myJson = response.json();
-                   window.sessionStorage.setItem("myJWT", myJson.JWT);
+                   setFormMessage(loginForm,"success", "");
+                   console.log("Login succeeded")
+                   window.location.href="home.html";
+                   return response.json();
                } else {
                    setFormMessage(loginForm, "error", "Invalid username/password combination");
-                   console.log("Login Failed")
+                   console.log("Login Failed");
                }
            })
+           .then(myJson => window.sessionStorage.setItem("myJWT", myJson.JWT))
    });
+
+    loginForm.addEventListener("submit", (e) => {
+
+        var fetchOptions = { method: "GET",
+            headers : {
+                'Authorization' : 'Bearer ' + window.sessionStorage.getItem("myJWT")
+            }}
+
+        fetch("/restservices/shoppinglist/profile", fetchOptions)
+            .then(function(response){
+                if (response.ok) return response.json();
+            }).then(myJson => console.log(myJson)).catch(error => console.log(error))
+    })
 
    document.querySelectorAll(".formInput").forEach(inputElement => {
        inputElement.addEventListener("blur", e => {
@@ -122,5 +138,7 @@ document.addEventListener("DOMContentLoaded", () => {
    });
 
 });
+
+
 
 
