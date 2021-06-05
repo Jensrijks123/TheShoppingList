@@ -12,7 +12,7 @@ body {
     align-items: center;
     justify-content: center;
     font-size: 18px;
-    background: url("/Assets/LoginBackground.jpg");
+    background: url("/LoginBackground.jpg");
     background-size: cover;
 }
 
