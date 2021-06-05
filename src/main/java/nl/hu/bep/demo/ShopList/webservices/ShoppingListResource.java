@@ -31,6 +31,7 @@ public class ShoppingListResource {
         if (sc.getUserPrincipal() instanceof User) {
             User current = (User) sc.getUserPrincipal();
             System.out.println("Goed");
+//            respone.setContentType("home/html");
             return Json.createObjectBuilder()
                     .add("username", current.getName())
                     .add("password", current.getPassword())

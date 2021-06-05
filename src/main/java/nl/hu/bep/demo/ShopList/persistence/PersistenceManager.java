@@ -22,9 +22,6 @@ public class PersistenceManager {
     private PersistenceManager() {
     }
 
-
-
-
     public static void loadUserFromAzure() throws IOException, ClassNotFoundException {
         if (blobContainer.exists()) {
             BlobClient blob = blobContainer.getBlobClient("user_blob");

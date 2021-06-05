@@ -1,56 +1,3 @@
-// const formLogin = document.getElementById('login');
-// const formSignin = document.getElementById('createAccount');
-// const usernameOrEmail = document.getElementById('userEmail');
-// const username = document.getElementById('username');
-// const email = document.getElementById('email');
-// const password = document.getElementById('password');
-// const password1 = document.getElementById('password1');
-// const password2 = document.getElementById('password2');
-
-
-// delete user :
-
-// document.querySelector("#delete").addEventListener("click", function (){
-//    var id = document.querySelector("#deleteid").value;
-//    var fetchoptions = {
-//        method: "DELETE",
-//        headers : {
-//            'Authorization': 'Bearer ' + window.sessionStorage.getItem("myJWT")
-//        }
-//    }
-//
-//    fetch("/restservices/customer/"+id, fetchoptions)
-//        .then(function (response) {
-//           if (response.ok) console.log("Customer deleted")
-//            else if (response.status === 404) console.log("Customer not found")
-//            else if (response.status === 401) console.log("Unauthorized")
-//        }).catch(error => console.log(error));
-// });
-
-
-// code les
-
-// document.addEventListener("load", event => {
-//    document.querySelector("#loginFormSubmit").addEventListener("submit", login);
-// });
-//
-// async function login() {
-//     console.log("Login");
-//     var formData = new FormData(document.querySelector("#login"));
-//     var encData = new URLSearchParams(formData.entries());
-//
-//     let response = await fetch("restservices/authentication", { method: "POST", body : encData})
-//
-//     if (response.ok) {
-//         let myJson = await response.json();
-//         window.sessionStorage.setItem("myJWT", myJson.JWT);
-//     } else {
-//         console.log("Login failed");
-//     }
-// }
-
-
-
 // Message bij login en sign form als er iets gebeurt
 function setFormMessage(formElement, type, message) {
     const messageElement = formElement.querySelector(".form__message");
@@ -136,7 +83,6 @@ document.addEventListener("DOMContentLoaded", () => {
           clearInputError(inputElement);
        });
    });
-
 });
 
 
