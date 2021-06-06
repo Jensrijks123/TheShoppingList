@@ -21,7 +21,6 @@ public class AuthenticationFilter implements ContainerRequestFilter {
 
         boolean isSecure = requestCtx.getSecurityContext().isSecure();
         String scheme = requestCtx.getUriInfo().getRequestUri().getScheme();
-        // Users are treated as guests, unless a valid JWT is provided
         MySecurityContext msc = new MySecurityContext(null, scheme);
         String authHeader = requestCtx.getHeaderString(HttpHeaders.AUTHORIZATION);
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
@@ -30,7 +29,7 @@ public class AuthenticationFilter implements ContainerRequestFilter {
             String token = authHeader.substring("Bearer".length()).trim();
 
             try {
-                // Validate the token
+
                 JwtParser parser = Jwts.parser().setSigningKey(AuthenticationResource.key);
 
                 Claims claims = parser.parseClaimsJws(token).getBody();

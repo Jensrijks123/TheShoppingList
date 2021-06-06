@@ -1,9 +1,18 @@
 package nl.hu.bep.demo.ShopList.model;
 
+import com.sun.jdi.connect.spi.Connection;
+
+import java.beans.Statement;
 import java.security.Principal;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+
+import static java.lang.System.out;
 
 public class User implements Principal {
 

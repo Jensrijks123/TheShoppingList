@@ -1,9 +1,9 @@
 package nl.hu.bep.demo.ShopList.listeners;
 
+import com.sun.jdi.connect.spi.Connection;
 import nl.hu.bep.demo.ShopList.model.Boodschappenlijstje;
 import nl.hu.bep.demo.ShopList.model.Item;
 import nl.hu.bep.demo.ShopList.model.User;
-import nl.hu.bep.demo.ShopList.persistence.PersistenceManager;
 import nl.hu.bep.demo.ShopList.security.SecurityManager;
 import reactor.core.scheduler.Schedulers;
 import reactor.netty.http.HttpResources;
@@ -11,10 +11,11 @@ import reactor.netty.http.HttpResources;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
+import java.sql.DriverManager;
 import java.time.Duration;
+import java.util.Properties;
 
 import static java.lang.System.*;
-
 
 @WebListener
 public class MyServletContextListener implements ServletContextListener {

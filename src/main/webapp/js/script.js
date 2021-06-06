@@ -36,8 +36,29 @@ document.addEventListener("DOMContentLoaded", () => {
        createAccountForm.classList.add("formHidden");
    });
 
-   // Fetch login
+   // Fetch sing up
+    createAccountForm.addEventListener("submit", (e) => {
+       e.preventDefault();
 
+       var formSignupData = new FormData(document.querySelector("#createAccount"));
+       var encSignupData = new URLSearchParams(formSignupData.entries());
+
+       fetch("/restservices/LoginSignup/signup", {method: "POST", body: encSignupData})
+           .then(function (response) {
+              if (response.ok) {
+                  setFormMessage(createAccountForm,"success", "");
+                  console.log("Sign up succeeded");
+                  window.location.href="home.html";
+                  return response.json();
+              } else {
+                  setFormMessage(createAccountForm, "error", "Invalid username/password combination");
+                  console.log("Sign up Failed");
+              }
+           })
+           .then(myJson => console.log(myJson)).catch(error => console.log(error))
+    });
+
+   // Fetch login
    loginForm.addEventListener("submit", (e) => {
        e.preventDefault()
 
@@ -49,7 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
                if (response.ok) {
                    setFormMessage(loginForm,"success", "");
                    console.log("Login succeeded")
-                   window.location.href="home.html";
+                   // window.location.href="home.html";
                    return response.json();
                } else {
                    setFormMessage(loginForm, "error", "Invalid username/password combination");
@@ -66,11 +87,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 'Authorization' : 'Bearer ' + window.sessionStorage.getItem("myJWT")
             }}
 
-        fetch("/restservices/shoppinglist/profile", fetchOptions)
+        fetch("/restservices/LoginSignup/profile", fetchOptions)
             .then(function(response){
                 if (response.ok) return response.json();
             }).then(myJson => console.log(myJson)).catch(error => console.log(error))
-    })
+    });
 
    document.querySelectorAll(".formInput").forEach(inputElement => {
        inputElement.addEventListener("blur", e => {
