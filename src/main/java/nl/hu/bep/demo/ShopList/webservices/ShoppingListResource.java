@@ -21,7 +21,6 @@ public class ShoppingListResource {
 
     @GET
     @Path("profile")
-//    @RolesAllowed("user")
     @Produces(MediaType.APPLICATION_JSON)
     public String getProfile(@Context SecurityContext sc) {
         if (sc.getUserPrincipal() instanceof User) {
@@ -55,40 +54,23 @@ public class ShoppingListResource {
         Response.ResponseBuilder response = Response.status(Response.Status.CONFLICT);
 
 
-        ResultSet rsUser = stmt.executeQuery("select userid, gebruikersnaam, email, wachtwoord, rol from gebruiker");
+        ResultSet rsUser = stmt.executeQuery("select gebruikersnaam, email, wachtwoord, rol from gebruiker where email = '"+ emailF +"'");
 
-        while (rsUser.next()) {
-            String test = rsUser.getString(2);
-            System.out.println(test);
+        if (password1F.equals(password2F)) {
+            if (rsUser.next()) {
+                response = Response.status(Response.Status.CONFLICT);
 
-            if (password1F.equals(password2F)) {
+            } else {
 
-                if (!rsUser.getString(2).equals(usernameF)) {
-
-                    if (!rsUser.getString(3).equals(emailF)) {
-                        String user1 = "user";
-                        String bakka = rsUser.getString(2);
-                        System.out.println(bakka);
-                        System.out.println("");
-                        System.out.println(test);
-                        try {
-                            stmt.executeQuery("INSERT INTO gebruiker (gebruikersnaam, email, wachtwoord, rol) VALUES ('" + usernameF + "', '" + emailF + "', '" + password1F + "', '" + user1 + "')");
-                            System.out.println("Iemand aangemaakt");
-                        } catch (Exception e) {
-                            System.out.println("Iemand aangemaakt22222");
-                            System.out.println(e.getMessage());
-                            response = Response.ok();
-                            break;
-                        }
-                    } else {
-                        response = Response.status(Response.Status.CONFLICT);
-                        break;
-                    }
-                } else {
-                    response = Response.status(Response.Status.CONFLICT);
-                    break;
+                try {
+                    stmt.executeQuery("INSERT INTO gebruiker (gebruikersnaam, email, wachtwoord, rol) VALUES ('" + usernameF + "', '" + emailF + "', '" + password1F + "', 'user')");
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                    response = Response.ok();
                 }
             }
+        } else {
+            response = Response.status(406);
         }
 
         return response.build();

@@ -55,8 +55,11 @@ document.addEventListener("DOMContentLoaded", () => {
                   alert("Your account has been registered");
                   window.location.href="home.html";
                   return response.json();
+              } else if(response.status === 406){
+                  setFormMessage(createAccountForm, "error", "Both of the passwords should be the same");
+                  console.log("Sign up Failed");
               } else {
-                  setFormMessage(createAccountForm, "error", "Invalid username/password/email combination");
+                  setFormMessage(createAccountForm, "error", "This email already exists");
                   console.log("Sign up Failed");
               }
            })
