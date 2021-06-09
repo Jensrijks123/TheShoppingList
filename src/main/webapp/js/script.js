@@ -1,3 +1,6 @@
+// wachtwoord is 3c941bd547c6a272b4b91d6388ca27d1524c2d59e08d6d3993f0e00b93753303
+
+
 // Message bij login en sign form als er iets gebeurt
 function setFormMessage(formElement, type, message) {
     const messageElement = formElement.querySelector(".form__message");
@@ -48,10 +51,12 @@ document.addEventListener("DOMContentLoaded", () => {
               if (response.ok) {
                   setFormMessage(createAccountForm,"success", "");
                   console.log("Sign up succeeded");
+                  setFormMessage(createAccountForm, "ok", "Your account has been registered");
+                  alert("Your account has been registered");
                   window.location.href="home.html";
                   return response.json();
               } else {
-                  setFormMessage(createAccountForm, "error", "Invalid username/password combination");
+                  setFormMessage(createAccountForm, "error", "Invalid username/password/email combination");
                   console.log("Sign up Failed");
               }
            })
@@ -70,7 +75,7 @@ document.addEventListener("DOMContentLoaded", () => {
                if (response.ok) {
                    setFormMessage(loginForm,"success", "");
                    console.log("Login succeeded")
-                   // window.location.href="home.html";
+                   window.location.href="home.html";
                    return response.json();
                } else {
                    setFormMessage(loginForm, "error", "Invalid username/password combination");
