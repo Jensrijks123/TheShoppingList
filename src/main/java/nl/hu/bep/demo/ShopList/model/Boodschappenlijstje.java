@@ -4,12 +4,14 @@ import java.util.ArrayList;
 
 public class Boodschappenlijstje {
 
+    private int lijstid;
     private String lijsteNaam;
     private ArrayList<Item> items;
     private ArrayList<User> users;
 
-    public Boodschappenlijstje(String lijsteNaam) {
+    public Boodschappenlijstje(String lijsteNaam, int lijstid) {
         this.lijsteNaam = lijsteNaam;
+        this.lijstid = lijstid;
     }
 
     public boolean equals(Object obj) {
@@ -24,6 +26,8 @@ public class Boodschappenlijstje {
         }
         return gelijkeObjecten;
     }
+
+
 
     public String getLijsteNaam() {
         return lijsteNaam;

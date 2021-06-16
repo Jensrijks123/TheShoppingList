@@ -66,6 +66,19 @@ document.addEventListener("DOMContentLoaded", () => {
            .then(myJson => console.log(myJson)).catch(error => console.log(error))
     });
 
+    loginForm.addEventListener("submit", (e) => {
+
+        var fetchOptions = { method: "GET",
+            headers : {
+                'Authorization' : 'Bearer ' + window.sessionStorage.getItem("myJWT")
+            }}
+
+        fetch("/restservices/LoginSignup/profile", fetchOptions)
+            .then(function(response){
+                if (response.ok) return response.json();
+            }).then(myJson => console.log(myJson)).catch(error => console.log(error))
+    });
+
    // Fetch login
    loginForm.addEventListener("submit", (e) => {
        e.preventDefault()
@@ -88,18 +101,7 @@ document.addEventListener("DOMContentLoaded", () => {
            .then(myJson => window.sessionStorage.setItem("myJWT", myJson.JWT))
    });
 
-    loginForm.addEventListener("submit", (e) => {
 
-        var fetchOptions = { method: "GET",
-            headers : {
-                'Authorization' : 'Bearer ' + window.sessionStorage.getItem("myJWT")
-            }}
-
-        fetch("/restservices/LoginSignup/profile", fetchOptions)
-            .then(function(response){
-                if (response.ok) return response.json();
-            }).then(myJson => console.log(myJson)).catch(error => console.log(error))
-    });
 
    document.querySelectorAll(".formInput").forEach(inputElement => {
        inputElement.addEventListener("blur", e => {

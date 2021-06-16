@@ -23,7 +23,7 @@ public class MyServletContextListener implements ServletContextListener {
     public void contextInitialized(ServletContextEvent sce) {
         System.out.println("Initializing application");
 
-        User u = new User("Djensman", "jens.rijks@student.hu.nl", "Password", "admin");
+//        User u = new User("Djensman", "jens.rijks@student.hu.nl", "Password", "admin");
 
     }
 

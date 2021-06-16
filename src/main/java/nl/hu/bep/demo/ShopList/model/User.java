@@ -20,20 +20,32 @@ public class User implements Principal {
 
     static {
         allUsers = new ArrayList<>();
-        allUsers.add(new User("djensman", "jens.rijks@student.hu.nl", "djensman", "user"));
-        allUsers.add(new User("admin", "admin@admin.com", "admin", "admin"));
+        allUsers.add(new User("djensman", "jens.rijks@student.hu.nl", "djensman", "user", 9992));
+        allUsers.add(new User("admin", "admin@admin.com", "admin", "admin", 9991));
     }
-
+    private int userid;
     private String username;
     private String email;
     private String password;
     private String role;
 
-    public User(String username, String email, String password, String role) {
+
+    public static User getAccount() {
+        return huidigeAccount;
+    }
+
+    public static void setAccount(User huidigeAccount) {
+        User.huidigeAccount = huidigeAccount;
+    }
+
+    private static User huidigeAccount;
+
+    public User(String username, String email, String password, String role, int userid) {
         this.username = username;
         this.email = email;
         this.password = password;
         this.role = role;
+        this.userid = userid;
     }
 
     public boolean addUser(User toAdd){
@@ -60,6 +72,10 @@ public class User implements Principal {
         }
         return null;
     }
+
+//    public static User getUserName(String username) {
+//        return user;
+//    }
 
     public String getName() {
         return username;
@@ -99,6 +115,14 @@ public class User implements Principal {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public int getUserid() {
+        return userid;
+    }
+
+    public void setUserid(int userid) {
+        this.userid = userid;
     }
 
     public boolean checkPassword(String password) {

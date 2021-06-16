@@ -12,6 +12,9 @@ import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.ext.Provider;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 @Provider
 @Priority(Priorities.AUTHENTICATION)
@@ -25,7 +28,6 @@ public class AuthenticationFilter implements ContainerRequestFilter {
         String authHeader = requestCtx.getHeaderString(HttpHeaders.AUTHORIZATION);
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
 
-
             String token = authHeader.substring("Bearer".length()).trim();
 
             try {
@@ -35,11 +37,12 @@ public class AuthenticationFilter implements ContainerRequestFilter {
                 Claims claims = parser.parseClaimsJws(token).getBody();
 
                 String user = claims.getSubject();
+
                 msc = new MySecurityContext(User.getUserByUserName(user), scheme);
 
 
             } catch (JwtException | IllegalArgumentException e) {
-                System.out.println("Invalid JWT, processing as guest!");
+
             }
         }
 

@@ -17,7 +17,8 @@ import java.sql.Statement;
 import java.util.AbstractMap;
 
 @Path("LoginSignup")
-public class ShoppingListResource {
+public class LoginSignupResource {
+
 
     @GET
     @Path("profile")
@@ -54,12 +55,12 @@ public class ShoppingListResource {
         Response.ResponseBuilder response = Response.status(Response.Status.CONFLICT);
 
 
-        ResultSet rsUser = stmt.executeQuery("select gebruikersnaam, email, wachtwoord, rol from gebruiker where email = '"+ emailF +"'");
+        ResultSet rsUser = stmt.executeQuery("select userid, gebruikersnaam, email, wachtwoord, rol from gebruiker where email = '"+ emailF +"'");
 
         if (password1F.equals(password2F)) {
+
             if (rsUser.next()) {
                 response = Response.status(Response.Status.CONFLICT);
-
             } else {
 
                 try {
@@ -67,6 +68,33 @@ public class ShoppingListResource {
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                     response = Response.ok();
+                    int gebruikerID = 0;
+
+                    try {
+
+                        ResultSet rsUserID = stmt.executeQuery("select gebruikersnaam, email, wachtwoord, userid from gebruiker");
+
+
+
+                        while (rsUserID.next()) {
+
+                            if (rsUserID.getString(1).equals(usernameF) && rsUserID.getString(3).equals(password1F) && rsUserID.getString(2).equals(emailF)) {
+                                gebruikerID = rsUserID.getInt(4);
+                          }
+                        }
+
+                    } catch (Exception b) {
+                        System.out.println(b.getMessage());
+                    }
+
+                    System.out.println(gebruikerID);
+
+                    String rolgebruiker = "user";
+
+                    User user = new User(usernameF, emailF, password1F, rolgebruiker, gebruikerID);
+
+                    User.setAccount(user);
+
                 }
             }
         } else {
