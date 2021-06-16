@@ -40,7 +40,7 @@ const overlay = document.getElementById('overlay');
 
 
 function openLijst() {
-    console.log("Deze functie bestaat nog")
+    console.log("Deze functie bestaat nog niet")
 }
 
 
@@ -95,10 +95,13 @@ document.addEventListener("DOMContentLoaded", () => {
                     var lijstNaamID = document.querySelector("#lijstNaam").value;
                     var tagButton = document.createElement("button");
                     var mydiv = document.getElementById("openLijstID");
-                    tagButton.innerHTML = lijstNaamID;
-                    tagButton.classList.add("lijstButton");
-                    tagButton.onclick = openLijst;
-                    mydiv.appendChild(tagButton);
+                    console.log(lijstNaamID);
+                    if (lijstNaamID !== "") {
+                        tagButton.innerHTML = lijstNaamID;
+                        tagButton.classList.add("lijstButton");
+                        tagButton.onclick = openLijst;
+                        mydiv.appendChild(tagButton);
+                    }
                 } else {
                 }
             })
