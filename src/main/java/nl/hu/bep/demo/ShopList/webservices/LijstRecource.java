@@ -34,22 +34,17 @@ public class LijstRecource {
 
         User user = User.getAccount();
         int gebruikerID = user.getUserid();
-        ResultSet rsLijst = stmt.executeQuery("select lijstid, lijstnaam from boodschappenlijstje where eigenaarLijst = '"+ gebruikerID +"'");
+
+        ResultSet rsLijst = stmt.executeQuery("select lijstnaam_combi from gebruiker_en_lijst where userid_id = '"+ gebruikerID +"'");
 
         ArrayList<String> lijstjes = new ArrayList<>();
 
-        int lijstID = 0;
         String lijstNaam = null;
 
         while (rsLijst.next()) {
-            lijstID = rsLijst.getInt("lijstid");
-            lijstNaam= rsLijst.getString("lijstnaam");
+            lijstNaam= rsLijst.getString("lijstnaam_combi");
             lijstjes.add(lijstNaam);
         }
-
-        System.out.println(lijstjes);
-
-//        ArrayList<HashMap<String,String>> info = new ArrayList<>();
 
         return Response.ok(lijstjes).build();
     }
@@ -66,14 +61,7 @@ public class LijstRecource {
             java.sql.Connection conn = DriverManager.getConnection("jdbc:postgresql://ec2-54-155-35-88.eu-west-1.compute.amazonaws.com:5432/d58m0v63ch5ib7", "lnwttavtayzuha", "3c941bd547c6a272b4b91d6388ca27d1524c2d59e08d6d3993f0e00b93753303");
             java.sql.Statement stmt = conn.createStatement();
 
-
-            //        Response.ResponseBuilder response = Response.ok();
-
-
-            System.out.println(lijstName);
-
             User user = User.getAccount();
-
 
             int gebruikerID = user.getUserid();
 
@@ -81,19 +69,9 @@ public class LijstRecource {
 
             ResultSet rsUser = stmt.executeQuery("select userid, gebruikersnaam, email, wachtwoord, rol from gebruiker where userid = '" + gebruikerID + "'");
 
-
-            int oke = 0;
-            String gebruikersnaam = null;
-            String role = null;
-            String wachtwoord = null;
-            String email = null;
             int userID = 0;
 
             while (rsUser.next()) {
-                role = rsUser.getString("rol");
-                wachtwoord = rsUser.getString("wachtwoord");
-                email = rsUser.getString("email");
-                gebruikersnaam = rsUser.getString("gebruikersnaam");
                 userID = rsUser.getInt("userid");
             }
 
@@ -102,7 +80,6 @@ public class LijstRecource {
                 stmt.executeQuery("INSERT INTO boodschappenlijstje (lijstnaam, eigenaarlijst) VALUES ('" + lijstName + "', '" + gebruikerID + "')");
             } catch (Exception e) {
                 System.out.println(e.getMessage());
-                //            response = Response.ok(lijstName);
             }
 
             ResultSet rsLijst = stmt.executeQuery("select lijstid from boodschappenlijstje where eigenaarLijst = '" + gebruikerID + "' and lijstnaam = '" + lijstName + "'");
@@ -116,19 +93,42 @@ public class LijstRecource {
             Boodschappenlijstje lijst = new Boodschappenlijstje(lijstName, lijstID);
 
             try {
-                stmt.executeQuery("INSERT INTO gebruiker_en_lijst (lijstid_id, userid_id) VALUES ('" + lijstID + "', '" + userID + "')");
+                stmt.executeQuery("INSERT INTO gebruiker_en_lijst (lijstid_id, userid_id, lijstnaam_combi) VALUES ('" + lijstID + "', '" + userID + "', '"+ lijstName +"')");
             } catch (Exception e) {
                 System.out.println(e.getMessage());
-                //            response = Response.ok().entity(lijstName);
             }
-
-
-            System.out.println(lijst.getLijsteNaam());
-
 
             return Response.ok(lijst.getLijsteNaam()).build();
         } else {
             return Response.status(Response.Status.NO_CONTENT).build();
         }
+    }
+
+    @POST
+    @Path("createLijstBack/{lijstNaam}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response createLijstBack(@PathParam("lijstNaam") String lijstName) throws ClassNotFoundException, SQLException {
+
+        Class.forName("org.postgresql.Driver");
+        java.sql.Connection conn = DriverManager.getConnection("jdbc:postgresql://ec2-54-155-35-88.eu-west-1.compute.amazonaws.com:5432/d58m0v63ch5ib7", "lnwttavtayzuha", "3c941bd547c6a272b4b91d6388ca27d1524c2d59e08d6d3993f0e00b93753303");
+        java.sql.Statement stmt = conn.createStatement();
+
+        User user1 = User.getAccount();
+
+        int userID1 = user1.getUserid();
+
+        ResultSet rsLijst = stmt.executeQuery("select lijstid_id from gebruiker_en_lijst where userid_id = '" + userID1 + "' and lijstnaam_combi = '"+ lijstName +"'");
+
+        int lijstID1 = 0;
+
+        while (rsLijst.next()) {
+            lijstID1 = rsLijst.getInt("lijstid_id");
+        }
+
+        Boodschappenlijstje lijstje =  new Boodschappenlijstje(lijstName, lijstID1);
+
+        Boodschappenlijstje.setLijst(lijstje);
+
+        return Response.ok().build();
     }
 }

@@ -4,25 +4,26 @@
     <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Shopping lists</title>
-    <script defer src="js/home.js"></script>
-    <link rel="stylesheet" href="css/home.css">
+    <script defer src="js/lijstje.js"></script>
+    <link rel="stylesheet" href="css/lijstje.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;1,500&display=swap" rel="stylesheet">
 </head>
 <body>
 
     <div class="container">
-        <h1 class="homeTitle">Your shopping lists</h1>
+
+        <h1 class="lijstTitle">Your list</h1>
 
         <div class="openLijstClass" id="openLijstID">
         </div>
 
-        <button data-modal-target="#modal" class="createListButton">Create list</button>
+        <button data-modal-target="#modal" class="addItembutton">Add item</button>
 
         <div class="modal" id="modal">
             <form class="formListName"  id="createLijst">
                 <div class="modal-header">
-                    <div class="title">Enter List Name</div>
+                    <div class="title">Add an Item</div>
 
                     <button data-close-button class="close-button">&times;</button>
 
@@ -31,21 +32,19 @@
 
                 <div class="modal-body">
                     <div class="listInputGroup">
-                        <input name="lijstNaam" id="lijstNaam" type="text" class="lijstNaam" maxlength="12" placeholder="List name">
+                        <input name="itemNaam" id="lijstNaam" type="text" class="lijstNaam" maxlength="12" placeholder="Enter your item name here" autofocus>
                         <div class="lijstNaamInputErrorMessage"></div>
                     </div>
                 </div>
 
                 <div class="containerFooter">
-                    <button data-close-button id="doneSubmit" class="doneButton" type="submit">DONE</button>
+                    <button id="addSubmit" class="addButton" type="button">ADD</button>
                 </div>
             </form>
         </div>
+
         <div id="overlay"></div>
-
     </div>
-
-
 
 </body>
 </html>

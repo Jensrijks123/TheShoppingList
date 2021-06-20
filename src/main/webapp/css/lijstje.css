@@ -1,0 +1,209 @@
+body {
+    --color-primary: #009579;
+    --color-primary-dark: #007f67;
+    --color-secondary: #252c6a;
+    --color-error: #cc3333;
+    --color-succes: #4bb544;
+    --bord-radius: 15px;
+
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    background: url("/LoginBackground.jpg");
+    background-size: cover;
+}
+
+.container, .addItembutton {
+    font: 500 1rem 'Roboto', sans-serif;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    width: 800px;
+    max-width: 95%;
+    height: 90%;
+    max-height: 90%;
+    margin: 1rem;
+    padding: 2rem;
+    box-shadow: 0 0 40px rgba(0,0, 0, 0.2);
+    border-radius: var(--bord-radius);
+    background: #ffffff;
+}
+
+.lijstTitle {
+    margin-bottom: 3rem;
+    text-align: center;
+}
+
+.addItembutton {
+    margin-top: auto;
+    width: 100%;
+    padding: 1rem 2rem;
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #ffffff;
+    border: none;
+    border-radius: var(--bord-radius);
+    outline: none;
+    cursor: pointer;
+    background: linear-gradient(to right, #fc7968 0%, #fc6879 100%);
+    margin-bottom: 2%;
+}
+
+.addItembutton:hover {
+    background: linear-gradient(to right, #b85c4b 0%, #c7525b 100%);
+}
+
+.addItembutton:active {
+    transform: scale(0.98);
+}
+
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    transition: 200ms ease-in-out;
+    border: 1px solid grey;
+    border-radius: var(--bord-radius);;
+    z-index: 10;
+    background-color: white;
+    width: 600px;
+    max-width: 85%;
+}
+
+.modal.active {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.modal-header {
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header .title {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.modal-header .close-button {
+    cursor: pointer;
+    border: none;
+    outline: none;
+    background: none;
+    font-size: 1.75rem;
+    font-weight: bold;
+}
+
+.modal-body {
+    padding: 1rem 2rem;
+}
+
+#overlay {
+    position: fixed;
+    opacity: 0;
+    transition: 200ms ease-in-out;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0, .5);
+    pointer-events: none;
+}
+
+#overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.listInputGroup {
+    margin-bottom: .5rem;
+}
+
+.lijstNaam {
+    display: block;
+    width: 100%;
+    padding: 0.75rem;
+    box-sizing: border-box;
+    border-radius: var(--bord-radius);
+    border: 1px solid #dddddd;
+    outline: none;
+    background: #eeeeee;
+    transition: background 0.2s, border-color 0.2s;
+
+}
+
+.lijstNaam:focus {
+    border-color: var(--color-primary);
+    background: #ffffff;
+}
+
+.lijstNaamError {
+    color: var(--color-error);
+    border-color: var(--color-error);
+}
+
+.lijstNaamInputErrorMessage {
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--color-error);
+}
+
+
+.containerFooter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.addButton {
+    width: 90%;
+    padding: 1rem 2rem;
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #ffffff;
+    border: none;
+    border-radius: var(--bord-radius);
+    outline: none;
+    cursor: pointer;
+    background: linear-gradient(to right, #fc7968 0%, #fc6879 100%);
+    margin-bottom: 1rem;
+}
+
+.addButton:hover {
+    background: linear-gradient(to right, #b85c4b 0%, #c7525b 100%);
+}
+
+.addButton:active {
+    transform: scale(0.98);
+}
+
+.lijstButton {
+    opacity: 90%;
+    width: 100%;
+    text-align: left;
+    padding: 2rem 1rem;
+    font-weight: bold;
+    font-size: 2.1rem;
+    color: #ffffff;
+    border: none;
+    border-radius: var(--bord-radius);
+    outline: none;
+    cursor: pointer;
+    background: linear-gradient(to right, #7765fc 0%, #6822f5 100%);
+    margin-bottom: 3%;
+}
+
+.lijstButton:active {
+    transform: scale(0.99);
+}
+
+.lijstButton:hover {
+    opacity: 100%;
+}

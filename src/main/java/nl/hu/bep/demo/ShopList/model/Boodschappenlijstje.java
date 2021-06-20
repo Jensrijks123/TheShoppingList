@@ -9,6 +9,16 @@ public class Boodschappenlijstje {
     private ArrayList<Item> items;
     private ArrayList<User> users;
 
+    public static Boodschappenlijstje getLijst() {
+        return huidigeLijst;
+    }
+
+    public static void setLijst(Boodschappenlijstje huidigeLijst) {
+        Boodschappenlijstje.huidigeLijst = huidigeLijst;
+    }
+
+    private static Boodschappenlijstje huidigeLijst;
+
     public Boodschappenlijstje(String lijsteNaam, int lijstid) {
         this.lijsteNaam = lijsteNaam;
         this.lijstid = lijstid;
@@ -27,7 +37,13 @@ public class Boodschappenlijstje {
         return gelijkeObjecten;
     }
 
+    public int getLijstid() {
+        return lijstid;
+    }
 
+    public void setLijstid(int lijstid) {
+        this.lijstid = lijstid;
+    }
 
     public String getLijsteNaam() {
         return lijsteNaam;

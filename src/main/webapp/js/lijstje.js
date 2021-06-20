@@ -9,7 +9,6 @@ window.addEventListener('load', (e) => {
             var mydiv = document.getElementById("openLijstID");
             tagButton.innerHTML = myJson[i];
             tagButton.classList.add("lijstButton");
-            tagButton.onclick = openLijst;
             mydiv.appendChild(tagButton);
             i++;
         }
@@ -20,7 +19,7 @@ window.addEventListener('load', (e) => {
             'Authorization' : 'Bearer ' + window.sessionStorage.getItem("myJWT")
         }}
 
-    fetch("/restservices/lijst/loadLijsten", fetchOptions)
+    fetch("/restservices/item/loadItems", fetchOptions)
         .then(function(response){
             if (response.ok) {
 
@@ -30,31 +29,9 @@ window.addEventListener('load', (e) => {
 
 });
 
-
 const openModalButtons = document.querySelectorAll('[data-modal-target]');
 const closeModalButtons = document.querySelectorAll('[data-close-button]');
 const overlay = document.getElementById('overlay');
-
-
-function openLijst(btn) {
-    console.log("begin")
-
-    var target = btn.target || btn.srcElement;
-
-    console.log(target.innerHTML)
-
-
-    var formlijstData = new FormData(document.querySelector("#createLijst"));
-    var encLijstData = new URLSearchParams(formlijstData.entries());
-
-    fetch("/restservices/lijst/createLijstBack/" + target.innerHTML, {method: "POST", body: encLijstData})
-        .then(function (response) {
-            if (response.ok) {
-                console.log("Response is ok")
-                window.location.href="lijstje.html";
-            }
-        })
-}
 
 openModalButtons.forEach(button => {
     button.addEventListener('click', () => {
@@ -89,21 +66,21 @@ function closeModal(modal) {
     overlay.classList.remove('active')
 }
 
-// create lijst
+// add item
 document.addEventListener("DOMContentLoaded", () => {
-    const createLijstForm = document.querySelector('#createLijst');
-
+    const createLijstForm = document.querySelector('#addSubmit');
 
     // Fetch create lijst
-    createLijstForm.addEventListener("submit", (e) => {
+    createLijstForm.addEventListener("click", (e) => {
         e.preventDefault();
 
         var formlijstData = new FormData(document.querySelector("#createLijst"));
         var encLijstData = new URLSearchParams(formlijstData.entries());
 
-        fetch("/restservices/lijst/createLijst", {method: "POST", body: encLijstData})
+        fetch("/restservices/item/createItem", {method: "POST", body: encLijstData})
             .then(function (response) {
                 if (response.ok) {
+                    console.log("Werkt")
 
                     var lijstNaamID = document.querySelector("#lijstNaam").value;
                     var tagButton = document.createElement("button");
@@ -111,17 +88,13 @@ document.addEventListener("DOMContentLoaded", () => {
                     console.log(lijstNaamID);
                     if (lijstNaamID !== "") {
                         tagButton.innerHTML = lijstNaamID;
-                        tagButton.setAttribute("id", 'lijstButtonClick')
                         tagButton.classList.add("lijstButton");
-                        // tagButton.onclick = openLijst;
-                        tagButton.onclick = function(){ openLijst(this); };
                         mydiv.appendChild(tagButton);
-                        location = location
+                        document.getElementById("lijstNaam").value = "";
                     }
                 } else {
-                }
-            })
+                    console.log("Fout")
+                    }
+                })
     });
 });
-
-
