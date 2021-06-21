@@ -7,7 +7,6 @@ body {
     --bord-radius: 15px;
 
     margin: 0;
-    height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -25,10 +24,9 @@ body {
     flex-direction: column;
     width: 800px;
     max-width: 95%;
-    height: 90%;
-    max-height: 90%;
+    min-height: 92vh;
     margin: 1rem;
-    padding: 2rem;
+    padding: 1rem;
     box-shadow: 0 0 40px rgba(0,0, 0, 0.2);
     border-radius: var(--bord-radius);
     background: #ffffff;
@@ -99,6 +97,7 @@ body {
     background: none;
     font-size: 1.75rem;
     font-weight: bold;
+    display: block;
 }
 
 .modal-body {
@@ -188,7 +187,7 @@ body {
     opacity: 90%;
     width: 100%;
     text-align: left;
-    padding: 2rem 1rem;
+    padding: 1.7rem 1rem;
     font-weight: bold;
     font-size: 2.1rem;
     color: #ffffff;

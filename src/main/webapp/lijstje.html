@@ -13,7 +13,28 @@
 
     <div class="container">
 
-        <h1 class="lijstTitle">Your list</h1>
+        <div class="top">
+            <button class="goBackButton" onclick="goBack()">&larr;</button>
+
+            <h1 class="lijstTitle">Your list</h1>
+
+            <div class="dropdown">
+                <ul class="dropbtn icons btn-right showLeft" onclick="showDropdown()">
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+                <div id="myDropdown" class="dropdown-content">
+                    <a href="addGebruiker.html">Add User</a>
+                    <!--                    <a href="#about">About</a>-->
+                    <!--                    <a href="#contact">Contact</a>-->
+                </div>
+            </div>
+        </div>
+
+
+
+
 
         <div class="openLijstClass" id="openLijstID">
         </div>

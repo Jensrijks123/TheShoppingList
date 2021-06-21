@@ -94,6 +94,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const createLijstForm = document.querySelector('#createLijst');
 
 
+
     // Fetch create lijst
     createLijstForm.addEventListener("submit", (e) => {
         e.preventDefault();
@@ -105,6 +106,7 @@ document.addEventListener("DOMContentLoaded", () => {
             .then(function (response) {
                 if (response.ok) {
 
+
                     var lijstNaamID = document.querySelector("#lijstNaam").value;
                     var tagButton = document.createElement("button");
                     var mydiv = document.getElementById("openLijstID");
@@ -113,10 +115,9 @@ document.addEventListener("DOMContentLoaded", () => {
                         tagButton.innerHTML = lijstNaamID;
                         tagButton.setAttribute("id", 'lijstButtonClick')
                         tagButton.classList.add("lijstButton");
-                        // tagButton.onclick = openLijst;
                         tagButton.onclick = function(){ openLijst(this); };
                         mydiv.appendChild(tagButton);
-                        location = location
+                        window.location.reload();
                     }
                 } else {
                 }

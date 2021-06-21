@@ -55,15 +55,27 @@ public class LijstRecource {
     @Path("createLijst")
     @Produces(MediaType.APPLICATION_JSON)
     public Response createLijst(@FormParam("lijstNaam") String lijstName) throws ClassNotFoundException, SQLException {
+        Class.forName("org.postgresql.Driver");
+        java.sql.Connection conn = DriverManager.getConnection("jdbc:postgresql://ec2-54-155-35-88.eu-west-1.compute.amazonaws.com:5432/d58m0v63ch5ib7", "lnwttavtayzuha", "3c941bd547c6a272b4b91d6388ca27d1524c2d59e08d6d3993f0e00b93753303");
+        java.sql.Statement stmt = conn.createStatement();
 
-        if (!lijstName.equals("")) {
-            Class.forName("org.postgresql.Driver");
-            java.sql.Connection conn = DriverManager.getConnection("jdbc:postgresql://ec2-54-155-35-88.eu-west-1.compute.amazonaws.com:5432/d58m0v63ch5ib7", "lnwttavtayzuha", "3c941bd547c6a272b4b91d6388ca27d1524c2d59e08d6d3993f0e00b93753303");
-            java.sql.Statement stmt = conn.createStatement();
+        User user = User.getAccount();
 
-            User user = User.getAccount();
+        int gebruikerID = user.getUserid();
 
-            int gebruikerID = user.getUserid();
+        ResultSet rsLijst1 = stmt.executeQuery("select lijstnaam_combi from gebruiker_en_lijst where userid_id = '"+ gebruikerID +"'");
+
+        ArrayList<String> lijstjes = new ArrayList<>();
+
+        String lijstNaam = null;
+
+        while (rsLijst1.next()) {
+            lijstNaam= rsLijst1.getString("lijstnaam_combi");
+            lijstjes.add(lijstNaam);
+        }
+        System.out.println(lijstjes.contains(lijstName));
+
+        if (!lijstName.equals("") && !lijstjes.contains(lijstName)) {
 
             System.out.println(gebruikerID);
 
