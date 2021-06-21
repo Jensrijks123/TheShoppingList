@@ -46,7 +46,9 @@ public class LijstRecource {
             lijstjes.add(lijstNaam);
         }
 
-        return Response.ok(lijstjes).build();
+
+        return !lijstjes.isEmpty() ? Response.ok(lijstjes).build() : Response.status(Response.Status.NO_CONTENT).entity(new AbstractMap.SimpleEntry<>("error", "There were no lists")).build();
+
     }
 
 

@@ -57,9 +57,6 @@ public class AuthenticationResource {
 
             User.setAccount(user);
 
-            System.out.println(User.getAccount());
-            System.out.println(userID);
-
             if (oke != 10) throw new IllegalArgumentException("No user found or invalid credentials");
             String token = createToken(username, role);
 

@@ -36,6 +36,10 @@ const closeModalButtons = document.querySelectorAll('[data-close-button]');
 const overlay = document.getElementById('overlay');
 
 
+function logout() {
+    window.location.href="index.html";
+}
+
 function openLijst(btn) {
     console.log("begin")
 

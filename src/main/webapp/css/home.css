@@ -32,9 +32,37 @@ body {
     background: #ffffff;
 }
 
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logout {
+    padding: .6rem 1rem;
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #ffffff;
+    border: none;
+    border-radius: var(--bord-radius);
+    outline: none;
+    cursor: pointer;
+    background: linear-gradient(to right, #fc7968 0%, #fc6879 100%);
+    margin-bottom: 2rem;
+}
+
+.logout:hover {
+    background: linear-gradient(to right, #b85c4b 0%, #c7525b 100%);
+}
+
+.logout:active {
+    transform: scale(0.98);
+}
+
 .homeTitle {
     margin-bottom: 3rem;
     text-align: center;
+    padding: 0rem .5rem;
 }
 
 .createListButton {

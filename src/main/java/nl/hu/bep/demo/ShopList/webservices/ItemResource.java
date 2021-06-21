@@ -10,6 +10,7 @@ import javax.ws.rs.core.Response;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.AbstractMap;
 import java.util.ArrayList;
 
 @Path("item")
@@ -39,7 +40,8 @@ public class ItemResource {
             items.add(itemNaam);
         }
 
-        return Response.ok(items).build();
+        return !items.isEmpty() ? Response.ok(items).build() : Response.status(Response.Status.NO_CONTENT).entity(new AbstractMap.SimpleEntry<>("error", "There were no items")).build();
+
     }
 
 

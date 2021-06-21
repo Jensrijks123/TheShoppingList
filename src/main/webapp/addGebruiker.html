@@ -14,14 +14,18 @@
   <div class="container">
 
     <div class="top">
-      <button class="goBackButton" onclick="goBack()">&larr;</button>
+      <button class="goBackButton" onclick="goBack()">&lsaquo;</button>
 
       <h1 class="lijstTitle">Add an user</h1>
     </div>
 
+    <form class="addUserForm" id="addUserForm">
+      <input type="email" class="addUserInput" id="addUserInput" name="addUserInput" autofocus placeholder="Users email" required>
+      <button class="addUserButton" id="addUserButton">ADD</button>
+    </form>
 
-
-
+    <div class="openLijstClass" id="openLijstID">
+    </div>
 
   </div>
 
