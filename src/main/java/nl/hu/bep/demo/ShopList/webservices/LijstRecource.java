@@ -75,7 +75,6 @@ public class LijstRecource {
             lijstNaam= rsLijst1.getString("lijstnaam_combi");
             lijstjes.add(lijstNaam);
         }
-        System.out.println(lijstjes.contains(lijstName));
 
         if (!lijstName.equals("") && !lijstjes.contains(lijstName)) {
 

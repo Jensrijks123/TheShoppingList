@@ -28,11 +28,15 @@
                 </ul>
                 <div id="myDropdown" class="dropdown-content">
                     <a href="addGebruiker.html">Add User</a>
+                    <a onclick="deleteSelectedItems()">Delete selected items</a>
                 </div>
             </div>
         </div>
 
         <div class="openLijstClass" id="openLijstID">
+        </div>
+
+        <div class="openLijstGedaanClass" id="openLijstGedaanID">
         </div>
 
         <button data-modal-target="#modal" class="addItembutton">Add item</button>
@@ -49,7 +53,7 @@
 
                 <div class="modal-body">
                     <div class="listInputGroup">
-                        <input name="itemNaam" id="lijstNaam" type="text" class="lijstNaam" maxlength="12" placeholder="Enter your item name here" autofocus>
+                        <input name="itemNaam" id="lijstNaam" type="text" class="lijstNaam" maxlength="19" placeholder="Enter your item name here" autofocus>
                         <div class="lijstNaamInputErrorMessage"></div>
                     </div>
                 </div>

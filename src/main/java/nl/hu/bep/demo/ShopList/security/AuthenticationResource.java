@@ -42,7 +42,7 @@ public class AuthenticationResource {
 
             while (rsUser.next()) {
 
-                if ((rsUser.getString(1).equals(username) || rsUser.getString(2).equals(username)) && rsUser.getString(3).equals(password)) {
+                if (rsUser.getString(2).equals(username) && rsUser.getString(3).equals(password)) {
                     role = rsUser.getString("rol");
                     wachtwoord = rsUser.getString("wachtwoord");
                     email = rsUser.getString("email");

@@ -3,8 +3,6 @@ window.addEventListener('load', (e) => {
     function bobba(myJson) {
         let i = 0;
         for (;myJson[i];) {
-            console.log(myJson[i]);
-
             var tagButton = document.createElement("button");
             var mydiv = document.getElementById("openLijstID");
             tagButton.innerHTML = myJson[i];
@@ -54,7 +52,6 @@ function openLijst(btn) {
     fetch("/restservices/lijst/createLijstBack/" + target.innerHTML, {method: "POST", body: encLijstData})
         .then(function (response) {
             if (response.ok) {
-                console.log("Response is ok")
                 window.location.href="lijstje.html";
             }
         })
@@ -114,7 +111,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     var lijstNaamID = document.querySelector("#lijstNaam").value;
                     var tagButton = document.createElement("button");
                     var mydiv = document.getElementById("openLijstID");
-                    console.log(lijstNaamID);
                     if (lijstNaamID !== "") {
                         tagButton.innerHTML = lijstNaamID;
                         tagButton.setAttribute("id", 'lijstButtonClick')

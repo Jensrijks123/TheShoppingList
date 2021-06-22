@@ -7,8 +7,6 @@ window.addEventListener('load', (e) => {
     function bobba(myJson) {
         let i = 0;
         for (;myJson[i];) {
-            console.log(myJson[i]);
-
             var tagButton = document.createElement("button");
             var mydiv = document.getElementById("openLijstID");
             tagButton.innerHTML = myJson[i];
@@ -46,12 +44,9 @@ document.addEventListener("DOMContentLoaded", () => {
         fetch("/restservices/user/voegUserToe", {method: "POST", body: encLijstData})
             .then(function (response) {
                 if (response.ok) {
-
-
                     var lijstNaamID = document.querySelector("#addUserInput").value;
                     var tagButton = document.createElement("button");
                     var mydiv = document.getElementById("openLijstID");
-                    console.log(lijstNaamID);
                     if (lijstNaamID !== "") {
                         tagButton.innerHTML = lijstNaamID;
                         tagButton.setAttribute("id", 'lijstButtonClick')

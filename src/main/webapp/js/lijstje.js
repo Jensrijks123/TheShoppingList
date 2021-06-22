@@ -1,14 +1,15 @@
+// Ready items
 window.addEventListener('load', (e) => {
 
     function bobba(myJson) {
         let i = 0;
         for (;myJson[i];) {
-            console.log(myJson[i]);
-
             var tagButton = document.createElement("button");
             var mydiv = document.getElementById("openLijstID");
             tagButton.innerHTML = myJson[i];
             tagButton.classList.add("lijstButton");
+            tagButton.setAttribute('id', myJson[i]);
+            tagButton.onclick = verwijderItem;
             mydiv.appendChild(tagButton);
             i++;
         }
@@ -19,15 +20,48 @@ window.addEventListener('load', (e) => {
             'Authorization' : 'Bearer ' + window.sessionStorage.getItem("myJWT")
         }}
 
-    fetch("/restservices/item/loadItems", fetchOptions)
+    fetch("/restservices/item/loadItemsReady", fetchOptions)
         .then(function(response){
             if (response.ok) {
-
                 return response.json();
             }
         }).then(myJson => bobba(myJson)).catch(error => console.log(error))
 
 });
+
+// Done items
+window.addEventListener('load', (e) => {
+
+    function bobba(myJson) {
+        let i = 0;
+        for (;myJson[i];) {
+            var tagButton = document.createElement("button");
+            var mydiv = document.getElementById("openLijstGedaanID");
+            tagButton.innerHTML = myJson[i];
+            tagButton.classList.add("lijstButtonGedaan");
+            tagButton.onclick = undoVerwijder;
+            tagButton.setAttribute('id',myJson[i]);
+            mydiv.appendChild(tagButton);
+            i++;
+        }
+    }
+
+    var fetchOptions = { method: "GET",
+        headers : {
+            'Authorization' : 'Bearer ' + window.sessionStorage.getItem("myJWT")
+        }}
+
+    fetch("/restservices/item/loadItemsDone", fetchOptions)
+        .then(function(response){
+            if (response.ok) {
+                return response.json();
+            }
+        }).then(myJson => bobba(myJson)).catch(error => console.log(error))
+
+});
+
+
+
 
 function goBack() {
     window.location.href="home.html";
@@ -37,7 +71,7 @@ function showDropdown() {
     document.getElementById("myDropdown").classList.toggle("show");
 }
 
-// Close the dropdown if the user clicks outside of it
+
 window.onclick = function(event) {
     if (!event.target.matches('.dropbtn')) {
         var dropdowns = document.getElementsByClassName("dropdown-content");
@@ -88,6 +122,76 @@ function closeModal(modal) {
     overlay.classList.remove('active')
 }
 
+function verwijderItem(btn) {
+
+    var target = btn.target || btn.srcElement;
+    var buttonRem = document.getElementById('' + target.innerHTML)
+
+    var formlijstData = new FormData(document.querySelector("#createLijst"));
+    var encLijstData = new URLSearchParams(formlijstData.entries());
+
+    fetch("/restservices/item/createItemDone/" + target.innerHTML, {method: "POST", body: encLijstData})
+        .then(function (response) {
+            if (response.ok) {
+                buttonRem.parentNode.removeChild(buttonRem);
+
+                var itemNaamValue = target.innerHTML;
+                var tagButton = document.createElement("button");
+                var mydiv = document.getElementById("openLijstGedaanID");
+                tagButton.innerHTML = itemNaamValue;
+                tagButton.classList.add("lijstButtonGedaan");
+                tagButton.onclick = undoVerwijder;
+                tagButton.setAttribute('id',itemNaamValue);
+                mydiv.appendChild(tagButton);
+            }
+        })
+}
+
+
+function undoVerwijder(btn) {
+
+    var target = btn.target || btn.srcElement;
+    var buttonRem = document.getElementById('' + target.innerHTML)
+
+    var formlijstData = new FormData(document.querySelector("#createLijst"));
+    var encLijstData = new URLSearchParams(formlijstData.entries());
+
+    fetch("/restservices/item/createItemBackToReady/" + target.innerHTML, {method: "POST", body: encLijstData})
+        .then(function (response) {
+            if (response.ok) {
+
+                buttonRem.parentNode.removeChild(buttonRem);
+
+                var lijstNaamID = target.innerHTML;
+                var tagButton = document.createElement("button");
+                var mydiv = document.getElementById("openLijstID");
+                tagButton.innerHTML = lijstNaamID;
+                tagButton.classList.add("lijstButton");
+                tagButton.onclick = verwijderItem;
+                tagButton.setAttribute('id',lijstNaamID);
+                mydiv.appendChild(tagButton);
+            }
+        })
+
+}
+
+function deleteSelectedItems() {
+
+    var divParent = document.getElementById('openLijstGedaanID')
+
+    var formlijstData = new FormData(document.querySelector("#createLijst"));
+    var encLijstData = new URLSearchParams(formlijstData.entries());
+
+    fetch("/restservices/item/deleteSelectedItems", {method: "POST", body: encLijstData})
+        .then(function (response) {
+            if (response.ok) {
+                console.log("gelukt");
+                divParent.querySelectorAll('*').forEach(n => n.remove());
+                window.location.reload();
+            }
+        })
+}
+
 // add item
 document.addEventListener("DOMContentLoaded", () => {
     const createLijstForm = document.querySelector('#addSubmit');
@@ -99,18 +203,17 @@ document.addEventListener("DOMContentLoaded", () => {
         var formlijstData = new FormData(document.querySelector("#createLijst"));
         var encLijstData = new URLSearchParams(formlijstData.entries());
 
-        fetch("/restservices/item/createItem", {method: "POST", body: encLijstData})
+        fetch("/restservices/item/createItemReady", {method: "POST", body: encLijstData})
             .then(function (response) {
                 if (response.ok) {
-                    console.log("Werkt")
-
                     var lijstNaamID = document.querySelector("#lijstNaam").value;
                     var tagButton = document.createElement("button");
                     var mydiv = document.getElementById("openLijstID");
-                    console.log(lijstNaamID);
                     if (lijstNaamID !== "") {
                         tagButton.innerHTML = lijstNaamID;
                         tagButton.classList.add("lijstButton");
+                        tagButton.onclick = verwijderItem;
+                        tagButton.setAttribute('id',lijstNaamID);
                         mydiv.appendChild(tagButton);
                         document.getElementById("lijstNaam").value = "";
                     }
