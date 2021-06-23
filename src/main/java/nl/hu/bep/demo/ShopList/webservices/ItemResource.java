@@ -81,14 +81,26 @@ public class ItemResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response createItemReady(@FormParam("itemNaam") String itemNaam) throws ClassNotFoundException, SQLException {
 
-        if (!itemNaam.equals("")) {
-            Class.forName("org.postgresql.Driver");
-            java.sql.Connection conn = DriverManager.getConnection("jdbc:postgresql://ec2-54-155-35-88.eu-west-1.compute.amazonaws.com:5432/d58m0v63ch5ib7", "lnwttavtayzuha", "3c941bd547c6a272b4b91d6388ca27d1524c2d59e08d6d3993f0e00b93753303");
-            java.sql.Statement stmt = conn.createStatement();
+        Class.forName("org.postgresql.Driver");
+        java.sql.Connection conn = DriverManager.getConnection("jdbc:postgresql://ec2-54-155-35-88.eu-west-1.compute.amazonaws.com:5432/d58m0v63ch5ib7", "lnwttavtayzuha", "3c941bd547c6a272b4b91d6388ca27d1524c2d59e08d6d3993f0e00b93753303");
+        java.sql.Statement stmt = conn.createStatement();
 
-            Boodschappenlijstje boodschappenlijstje = Boodschappenlijstje.getLijst();
+        Boodschappenlijstje boodschappenlijstje = Boodschappenlijstje.getLijst();
 
-            int lijstID = boodschappenlijstje.getLijstid();
+        int lijstID = boodschappenlijstje.getLijstid();
+
+        ResultSet rsItemNaam = stmt.executeQuery("select itemnaam_combi from item_en_lijst where lijstid_id = '"+ lijstID +"'");
+
+        String itemNaam123 = null;
+
+        ArrayList<String> items = new ArrayList<>();
+
+        while (rsItemNaam.next()) {
+            itemNaam123 = rsItemNaam.getString("itemnaam_combi");
+            items.add(itemNaam123);
+        }
+
+        if (!itemNaam.equals("") && !items.contains(itemNaam)) {
 
             try {
                 stmt.executeQuery("INSERT INTO item (itemnaam) VALUES ('" + itemNaam + "')");
@@ -213,4 +225,24 @@ public class ItemResource {
         }
         return Response.ok().build();
     }
+
+    @GET
+    @Path("loadLijstNaam")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getLijstNaam() {
+
+        Boodschappenlijstje boodschappenlijstje = Boodschappenlijstje.getLijst();
+        String boodschappenlijstjeNaam = boodschappenlijstje.getLijsteNaam();
+
+        ArrayList<String> lijstNamen = new ArrayList<>();
+
+        lijstNamen.add(boodschappenlijstjeNaam);
+
+        System.out.println(lijstNamen);
+
+        return !lijstNamen.isEmpty() ? Response.ok(lijstNamen).build() : Response.status(Response.Status.NO_CONTENT).entity(new AbstractMap.SimpleEntry<>("error", "There was no list name")).build();
+
+    }
+
+
 }

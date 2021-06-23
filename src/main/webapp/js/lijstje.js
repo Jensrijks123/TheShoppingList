@@ -26,8 +26,27 @@ window.addEventListener('load', (e) => {
                 return response.json();
             }
         }).then(myJson => bobba(myJson)).catch(error => console.log(error))
-
 });
+
+window.addEventListener('load', (e) => {
+
+    function bobba(myJson) {
+        document.getElementById('lijstTitle').innerHTML = myJson;
+    }
+
+    var fetchOptions1 = { method: "GET",
+        headers : {
+            'Authorization' : 'Bearer ' + window.sessionStorage.getItem("myJWT")
+        }}
+
+    fetch("/restservices/item/loadLijstNaam", fetchOptions1)
+        .then(function(response){
+            if (response.ok) {
+                return response.json();
+            }
+        }).then(myJson => bobba(myJson)).catch(error => console.log(error))
+
+})
 
 // Done items
 window.addEventListener('load', (e) => {
